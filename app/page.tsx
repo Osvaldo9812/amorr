@@ -1,29 +1,27 @@
 'use client';
 
-import { useState, type ChangeEvent } from 'react';
-import { Camera, ChevronDown, Heart, Infinity, Quote, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, Heart, Infinity, Quote, Sparkles } from 'lucide-react';
 
 const moments = [
-  { date: 'Nuestro comienzo', title: 'El día en que todo cambió', text: 'Sin saberlo, aquel encuentro iba a convertirse en el inicio de mi historia favorita. Desde entonces, cada día tiene un poco más de luz.', note: 'Nuestra primera foto juntos' },
-  { date: 'Primeros recuerdos', title: 'Aprendimos a ser nosotros', text: 'Entre risas, nervios y pequeños detalles, fuimos construyendo ese lugar seguro al que siempre quiero volver.', note: 'Una aventura que recordamos' },
-  { date: 'Cuando fue difícil', title: 'Elegimos no rendirnos', text: 'No todo fue sencillo, pero incluso en los días grises supimos escucharnos, crecer y seguir caminando de la mano.', note: 'Un momento que superamos' },
-  { date: 'Cada día', title: 'Tu apoyo se volvió mi fuerza', text: 'Gracias por creer en mí cuando yo dudaba, por celebrar mis pasos y por recordarme que nunca tengo que cargar todo a solas.', note: 'Ese día que estuviste para mí' },
-  { date: 'Hasta hoy', title: 'Todo el esfuerzo ha valido la pena', text: 'Hemos cambiado, aprendido y madurado. Me enorgullece el amor que cuidamos y la manera en que seguimos eligiéndonos.', note: 'Nuestra foto más reciente' },
+  { date: 'Octubre', title: 'Donde comenzó nuestro recorrido', text: 'Entre reflejos y sonrisas empezó a guardarse esta historia que hoy significa tanto para mí.', photos: ['/photos/octubre.jpeg'] },
+  { date: 'Noviembre', title: 'La alegría de coincidir', text: 'Cada salida se convirtió en una excusa para reír, conocernos mejor y sumar un recuerdo nuevo.', photos: ['/photos/noviembre.jpeg'] },
+  { date: 'Diciembre', title: 'Un final de año a tu lado', text: 'Cerramos un capítulo juntos, agradeciendo cada momento y soñando con todo lo que vendría después.', photos: ['/photos/diciembre.jpeg'] },
+  { date: 'Enero', title: 'Caminando de la mano', text: 'Empezamos el año con una certeza sencilla y preciosa: quería seguir avanzando contigo.', photos: ['/photos/enero.jpeg'] },
+  { date: 'Febrero', title: 'Nuestro amor en dos instantes', text: 'Dos recuerdos del mismo mes, dos maneras de comprobar que cualquier lugar se vuelve especial si estamos juntos.', photos: ['/photos/febrero-1.jpeg', '/photos/febrero-2.jpeg'] },
+  { date: 'Marzo', title: 'La confianza de ser nosotros', text: 'Entre gestos espontáneos y sonrisas sinceras seguimos construyendo nuestro lugar seguro.', photos: ['/photos/marzo-1.jpeg', '/photos/marzo-2.jpeg'] },
+  { date: 'Abril', title: 'Besos que dicen todo', text: 'En los detalles pequeños encuentro las razones más grandes para agradecer que estés en mi vida.', photos: ['/photos/abril.jpeg'] },
+  { date: 'Mayo', title: 'Aventuras y cariño', text: 'Desde una noche inolvidable hasta un beso en una tarde tranquila: contigo amo todas las versiones de la vida.', photos: ['/photos/mayo-1.jpeg', '/photos/mayo-2.jpeg'] },
+  { date: 'Junio', title: 'Cada vez más cerca', text: 'Mes tras mes hemos aprendido a escucharnos, apoyarnos y elegirnos con más fuerza.', photos: ['/photos/junio.jpeg'] },
+  { date: 'Julio', title: 'La felicidad también es jugar', text: 'Gracias por compartir conmigo esa complicidad que hace ligeros los días y enormes las sonrisas.', photos: ['/photos/julio.jpeg'] },
+  { date: 'Agosto', title: 'Todo lo vivido y lo que falta', text: 'Miro nuestra historia y me emociona saber que aún quedan tantos lugares, sueños y recuerdos por descubrir contigo.', photos: ['/photos/agosto.jpeg'] },
 ];
 
-function PhotoSlot({ index, note }: { index: number; note: string }) {
-  const [photo, setPhoto] = useState<string>();
-  const handlePhoto = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) setPhoto(URL.createObjectURL(file));
-  };
-
+function MemoryPhotos({ photos, label }: { photos: string[]; label: string }) {
   return (
-    <label className="photo-slot group" style={photo ? { backgroundImage: `url(${photo})` } : undefined}>
-      <input className="sr-only" type="file" accept="image/*" onChange={handlePhoto} aria-label={`Agregar foto: ${note}`} />
-      {!photo && <><span className="photo-number">0{index + 1}</span><Camera className="h-7 w-7" aria-hidden="true" /><span>{note}</span><small>Toca para agregar una foto</small></>}
-      {photo && <span className="photo-change">Cambiar foto</span>}
-    </label>
+    <div className={`memory-photos ${photos.length > 1 ? 'memory-pair' : ''}`}>
+      {photos.map((photo, index) => <img key={photo} src={photo} alt={`${label}${photos.length > 1 ? `, recuerdo ${index + 1}` : ''}`} loading="lazy" />)}
+    </div>
   );
 }
 
@@ -48,7 +46,7 @@ export default function Home() {
             <a href="#cronologia" className="group mt-10 inline-flex items-center gap-3 text-sm font-semibold text-primary">Comenzar nuestra historia<span className="grid h-10 w-10 place-items-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:translate-y-1"><ChevronDown className="h-4 w-4" /></span></a>
           </div>
           <div className="relative mx-auto w-full max-w-[440px]">
-            <div className="photo-card rotate-3"><PhotoSlot index={0} note="Nuestra foto favorita" /><p className="px-6 pb-6 pt-5 text-center font-serif text-xl italic text-primary">El comienzo de algo precioso</p></div>
+            <div className="photo-card rotate-3"><img className="hero-photo" src="/photos/favorita.jpeg" alt="Nuestra foto favorita" /><p className="px-6 pb-6 pt-5 text-center font-serif text-xl italic text-primary">Mi lugar favorito siempre será a tu lado</p></div>
             <div className="absolute -bottom-7 -left-3 -rotate-6 rounded-2xl bg-primary px-5 py-4 text-primary-foreground shadow-xl sm:-left-7"><Infinity className="mb-1 h-7 w-7" /><p className="text-xs uppercase tracking-[.18em] opacity-80">recuerdos juntos</p></div>
           </div>
         </div>
@@ -57,11 +55,11 @@ export default function Home() {
       <section id="cronologia" className="timeline-section">
         <div className="section-heading"><p>Capítulo por capítulo</p><h2>Todo lo que nos trajo <em>hasta aquí</em></h2><span>Cada recuerdo guarda una versión de nosotros que vale la pena abrazar.</span></div>
         <div className="timeline">
-          {moments.map((moment, index) => (
+          {moments.map((moment) => (
             <article className="timeline-item" key={moment.title}>
               <div className="timeline-copy"><p className="timeline-date">{moment.date}</p><h3>{moment.title}</h3><p>{moment.text}</p></div>
               <div className="timeline-dot"><Heart className="h-3.5 w-3.5 fill-current" /></div>
-              <div className="timeline-photo"><PhotoSlot index={index + 1} note={moment.note} /></div>
+              <div className="timeline-photo"><MemoryPhotos photos={moment.photos} label={`Nosotros en ${moment.date}`} /></div>
             </article>
           ))}
         </div>

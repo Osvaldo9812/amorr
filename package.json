@@ -9,6 +9,7 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
+    "start:render": "wrangler dev --ip 0.0.0.0 --port ${PORT:-10000} --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt"
   },
